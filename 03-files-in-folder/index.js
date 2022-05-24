@@ -10,13 +10,16 @@ fs.readdir(folderPath,
       throw err;
     }   
     files.forEach(x=>{
-        
       if(x.isFile()){
         const extRegExp=new RegExp(/\..+/);
         const fileName=x.name.replace(extRegExp,'');
         const extName=x.name.match(extRegExp);
-        let fileSize=fs.statSync(path.join(__dirname,'secret-folder',x.name.toString())).size/1000;
-        console.log(`${fileName}-${extName.toString().slice(1)}-${fileSize}kb`);
+        let fileSize;
+        fs.stat(path.join(__dirname,'secret-folder',x.name.toString()),(err,stats)=>{
+          if(err) {return;}
+          fileSize=stats.size;
+          console.log(`${fileName}-${extName.toString().slice(1)}-${fileSize}kb`);
+        });        
       }
     });
   });
