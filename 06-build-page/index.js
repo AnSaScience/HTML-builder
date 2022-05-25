@@ -44,7 +44,7 @@ readStream.on('end',()=>{
       }
     });
   
-});
+}});
 
 //work with css bundle
 
